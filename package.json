@@ -1,0 +1,36 @@
+{
+    "name": "nuxt-app",
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "devDependencies": {
+        "@nuxt/devtools": "latest",
+        "@nuxtjs/style-resources": "^1.2.1",
+        "@sidebase/nuxt-auth": "^0.6.0-beta.3",
+        "@types/mysql": "^2.15.21",
+        "@types/node": "^18.17.1",
+        "autoprefixer": "^10.4.14",
+        "nuxt": "^3.6.5",
+        "postcss": "^8.4.27",
+        "sass": "^1.65.1",
+        "sass-loader": "^13.3.2",
+        "tailwindcss": "^3.3.3"
+    },
+    "dependencies": {
+        "@nuxtjs/auth-next": "5.0.0-1667386184.dfbbb54",
+        "@nuxtjs/axios": "^5.13.6",
+        "@pinia/nuxt": "^0.4.11",
+        "mysql": "^2.18.1",
+        "mysql2": "^3.6.0",
+        "pinia": "^2.1.6",
+        "vee-validate": "^4.11.3"
+    },
+    "overrides": {
+        "vue": "latest"
+    }
+}

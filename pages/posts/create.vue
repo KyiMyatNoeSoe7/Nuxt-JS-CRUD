@@ -4,17 +4,17 @@
     <form @submit.prevent="create" >
       <div class="mb-6">
       <label for="username-success" class="title-label">ID</label>
-      <input type="number" v-bind="id" class="input-title" name="id" v-model="post.id" placeholder="Enter ID number" />
+      <input type="number" v-bind="id" class="input-title" name="id" placeholder="Enter ID number" />
       <p class="error-message">{{ errors.id }}</p>
       </div>
       <div class="mb-6">
       <label for="username-success" class="title-label">Title</label>
-      <input type="text" v-bind="title" class="input-title" v-model="post.title" placeholder="Enter title" />
+      <input type="text" v-bind="title" class="input-title" placeholder="Enter title" />
       <p class="error-message">{{ errors.title }}</p>
       </div>
       <div class="mb-6">
       <label for="message" class="description-label">Description</label>
-      <textarea rows="4" v-bind="description" class="textarea-desp" v-model="post.description" placeholder="Enter description..."></textarea>
+      <textarea rows="4" v-bind="description" class="textarea-desp" placeholder="Enter description..."></textarea>
       <p class="error-message">{{ errors.description }}</p>
       </div>
       <button class="base-button" type="submit">Save</button>
@@ -29,56 +29,33 @@ definePageMeta({
   middleware: ["auth"]
 });
 
-function required(value : any) {
-  return value ? true : 'This field is required';
+function required(value: any) {
+  return value ? true : "This field is required";
 }
 
 const { defineInputBinds, handleSubmit, errors } = useForm({
   validationSchema: {
     id: required,
     title: required,
-    description: required
+    description: required,
   },
 });
 
-const id = defineInputBinds('id');
-const title = defineInputBinds('title');
-const description = defineInputBinds('description');
-
-const post = ref({
-  id: '',
-  title: '',
-  description: '',
-});
+const id = defineInputBinds("id");
+const title = defineInputBinds("title");
+const description = defineInputBinds("description");
 
 const router = useRouter();
 
-const create = handleSubmit(values => {
-    useFetch('/api/posts/store', {
-      method: 'post',
-      body: { id: post.value.id,
-            title: post.value.title,
-            description: post.value.description
-      }
-    })
-    router.push('/posts/list');
+const create = handleSubmit((values) => {
+  const { id, title, description } = values;
+  useFetch("/api/posts/store", {
+    method: "post",
+    body: { id, title, description },
+  });
+  router.push("/posts/list");
 });
 
-// function create() {
-//     axios.post('/api/posts/store', post.value).then(res => {
-//         // console.log(res, 'res');
-//         post.value.title = '';
-//         post.value.description = '';
-//     }) 
-//     .catch(function (error) {
-//         // console.log(error, 'error');
-//         if(error.response) {
-//             if(error.response.status == 422) {
-//                 // post.errorList = error.response.data.errors;
-//             }
-//         }
-//     })
-// };
 </script>
 
 <style scoped lang="scss">

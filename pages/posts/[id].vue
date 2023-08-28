@@ -4,12 +4,12 @@
     <form @submit.prevent="update">
         <div class="mb-6">
         <label for="username-success" class="title-label">Title</label>
-        <input type="text" class="input-title" v-model="post.title" placeholder="Enter title" />
+        <input type="text" class="input-title" v-model="title" placeholder="Enter title" />
         <p class="error-message">{{ errors.title }}</p>
         </div>
         <div class="mb-6">
         <label for="message" class="description-label">Description</label>
-        <textarea rows="4" class="textarea-desp" v-model="post.description" placeholder="Enter description..."></textarea>
+        <textarea rows="4" class="textarea-desp" v-model="description" placeholder="Enter description..."></textarea>
         <p class="error-message">{{ errors.description }}</p>
         </div>
         <button class="base-button" type="submit">Save</button>
@@ -31,30 +31,28 @@ function required(value : any) {
 const route = useRoute();
 const router = useRouter();
 const id = route.params.id;
-const { data }: any = await useFetch("/api/posts/" + id);
-
-const post = ref(data);
 
 const { useFieldModel, handleSubmit, errors } = useForm({
   validationSchema: {
     title: required,
-    description: required
+    description: required,
   },
 });
 
-const title = useFieldModel(post.title);
-const description = useFieldModel(post.description);
+const title = useFieldModel("title");
+const description = useFieldModel("description");
 
-// const title = defineInputBinds('title');
-// const description = defineInputBinds('description');
+const { data }: any = await useFetch("/api/posts/" + id);
+title.value = data.value.title;
+description.value = data.value.description;
 
-const update = handleSubmit(values => {
-  console.log(values);
+const update = handleSubmit((values) => {
+  const { title, description } = values;
   const { error } = useFetch("/api/posts/" + id, {
     method: "PUT",
     body: {
-      title: data.value.title,
-      description: data.value.description,
+      title,
+      description,
     },
   });
   router.push({ path: "/posts/list" });

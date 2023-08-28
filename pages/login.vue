@@ -8,7 +8,6 @@
           type="text"
           v-bind="email"
           placeholder="Enter email"
-          v-model="user.email"
           class="base-text-field"
         />
         <p class="error-message">{{ errors.email }}</p>
@@ -16,7 +15,6 @@
           type="password"
           v-bind="password"
           placeholder="Enter password"
-          v-model="user.password"
           class="base-text-field"
         />
         <p class="error-message">{{ errors.password }}</p>
@@ -44,21 +42,14 @@ const { defineInputBinds, handleSubmit, errors } = useForm({
 const email = defineInputBinds('email');
 const password = defineInputBinds('password');
 
-const user = ref({
-  email: '',
-  password: '',
-});
 const router = useRouter();
 const isLogin = useCookie('auth');
 
 const login = handleSubmit(values => {
-  if(user.value.email === 'admin@gmail.com' && user.value.password === 'password'){
+  const { email, password } = values;
+  if(email === 'admin@gmail.com' && password === 'password'){
     isLogin.value = true;
     router.push('/')
-  }
-  else {
-    user.value.email = ''; 
-    user.value.password = ''; 
   }
 });
 

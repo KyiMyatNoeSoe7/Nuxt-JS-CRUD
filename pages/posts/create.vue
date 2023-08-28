@@ -1,20 +1,21 @@
 <template>
 <div class="container">
     <AtomsTextLabel text="Create Post" />
-    <form @submit.prevent="create">
+    <form @submit.prevent="create" >
       <div class="mb-6">
       <label for="username-success" class="title-label">ID</label>
-      <Field type="number" :rules="required" class="input-title" name="id" v-model="post.id" placeholder="Enter ID number" />
-      <p class="error-message">{{ errors }}</p>
+      <input type="number" v-bind="id" class="input-title" name="id" v-model="post.id" placeholder="Enter ID number" />
+      <p class="error-message">{{ errors.id }}</p>
       </div>
       <div class="mb-6">
       <label for="username-success" class="title-label">Title</label>
-      <input type="text" class="input-title" v-model="post.title" placeholder="Enter title" />
-      <p class="error-message">Username available!</p>
+      <input type="text" v-bind="title" class="input-title" v-model="post.title" placeholder="Enter title" />
+      <p class="error-message">{{ errors.title }}</p>
       </div>
       <div class="mb-6">
       <label for="message" class="description-label">Description</label>
-      <textarea rows="4" class="textarea-desp" v-model="post.description" placeholder="Enter description..."></textarea>
+      <textarea rows="4" v-bind="description" class="textarea-desp" v-model="post.description" placeholder="Enter description..."></textarea>
+      <p class="error-message">{{ errors.description }}</p>
       </div>
       <button class="base-button" type="submit">Save</button>
     </form>
@@ -22,23 +23,37 @@
 </template>
 
 <script lang="ts" setup>
-import { Field, Form } from 'vee-validate';
+import { useForm } from 'vee-validate';
+
 definePageMeta({
   middleware: ["auth"]
 });
+
+function required(value : any) {
+  return value ? true : 'This field is required';
+}
+
+const { defineInputBinds, handleSubmit, errors } = useForm({
+  validationSchema: {
+    id: required,
+    title: required,
+    description: required
+  },
+});
+
+const id = defineInputBinds('id');
+const title = defineInputBinds('title');
+const description = defineInputBinds('description');
+
 const post = ref({
   id: '',
   title: '',
   description: '',
 });
 
-function required(value: any) {
-  return value ? true : 'This field is required';
-}
-
 const router = useRouter();
 
-function create() {
+const create = handleSubmit(values => {
     useFetch('/api/posts/store', {
       method: 'post',
       body: { id: post.value.id,
@@ -47,7 +62,7 @@ function create() {
       }
     })
     router.push('/posts/list');
-}
+});
 
 // function create() {
 //     axios.post('/api/posts/store', post.value).then(res => {

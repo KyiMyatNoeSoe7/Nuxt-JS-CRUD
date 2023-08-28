@@ -6,18 +6,20 @@
           <AtomsTextLabel text="Sign in to your account" />
           <input
           type="text"
+          v-bind="email"
           placeholder="Enter email"
           v-model="user.email"
           class="base-text-field"
-          required=""
         />
+        <p class="error-message">{{ errors.email }}</p>
         <input
           type="password"
+          v-bind="password"
           placeholder="Enter password"
           v-model="user.password"
           class="base-text-field"
-          required=""
         />
+        <p class="error-message">{{ errors.password }}</p>
         <button class="base-button" type="submit">Login</button>
       </form>
       </div>
@@ -26,6 +28,22 @@
 </template>
 
 <script lang="ts" setup>
+import { useForm } from 'vee-validate';
+
+function required(value : any) {
+  return value ? true : 'This field is required';
+}
+
+const { defineInputBinds, handleSubmit, errors } = useForm({
+  validationSchema: {
+    email: required,
+    password: required,
+  },
+});
+
+const email = defineInputBinds('email');
+const password = defineInputBinds('password');
+
 const user = ref({
   email: '',
   password: '',
@@ -33,12 +51,16 @@ const user = ref({
 const router = useRouter();
 const isLogin = useCookie('auth');
 
-function login() {
+const login = handleSubmit(values => {
   if(user.value.email === 'admin@gmail.com' && user.value.password === 'password'){
     isLogin.value = true;
     router.push('/')
   }
-};
+  else {
+    user.value.email = ''; 
+    user.value.password = ''; 
+  }
+});
 
 </script> 
 
@@ -67,5 +89,9 @@ function login() {
     text-gray-900 
     rounded-lg
     block w-full p-2.5;
+}
+.error-message {
+    @apply 
+    mt-2 text-sm text-green-600 dark:text-green-500;
 }
 </style>

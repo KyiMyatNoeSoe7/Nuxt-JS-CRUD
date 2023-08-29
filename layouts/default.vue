@@ -1,36 +1,36 @@
 <template>
   <div>
-    <!-- <OrganismsNavigation /> -->
     <header class="nav-header">
-    <nav class="nav-container">
-      <div class="nav-head">
-        <AtomsHeadTitle />
-        <!-- <AtomsLoginButton /> -->
-        <div class="nav-div">
-          <ul class="nav-base">
-            <li>
-              <nuxt-link to="/" class="nav" aria-current="page">Home</nuxt-link>
-            </li>
-            <li>
-              <nuxt-link to="/about" class="nav">About</nuxt-link>
-            </li>
-            <li>
-              <nuxt-link to="/contact" class="nav">Contact</nuxt-link>
-            </li>
-            <li>
-              <nuxt-link to="/posts/list" class="nav">Posts</nuxt-link>
-            </li>
-            <li>
-              <nuxt-link v-if="!isLogin" to="/login" class="nav">Login</nuxt-link>
-            </li>
-            <li>
-              <button><nuxt-link v-if="isLogin == true" @click="logout" class="nav">Logout</nuxt-link></button>
-            </li>
-          </ul>
+      <nav class="nav-container">
+        <div class="nav-head">
+          <AtomsHeadTitle />
+          <div class="nav-div">
+            <ul class="nav-base">
+              <li>
+                <nuxt-link to="/" class="nav" aria-current="page">Home</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/about" class="nav">About</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/contact" class="nav">Contact</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/posts/list" class="nav">Posts</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link v-if="!isLogin" to="/login" class="nav">Login</nuxt-link>
+              </li>
+              <li>
+                <button>
+                  <nuxt-link v-if="isLogin == true" @click="logout" class="nav">Logout</nuxt-link>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
     <div class="m-4">
       <slot />
     </div>
@@ -40,11 +40,11 @@
 
 <script setup lang="ts">
 const router = useRouter();
-const isLogin = useCookie('auth');
+const isLogin = useCookie("auth");
 function logout() {
-      isLogin.value = false;
-      router.push('/login');
-};
+  isLogin.value = false;
+  router.push("/login");
+}
 </script>
 
 

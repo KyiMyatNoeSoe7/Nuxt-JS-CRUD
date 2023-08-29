@@ -4,32 +4,30 @@
       <div class="login-title">
         <form @submit.prevent="login">
           <AtomsTextLabel text="Sign in to your account" />
-          <input
-          type="text"
-          v-bind="email"
-          placeholder="Enter email"
-          class="base-text-field"
-        />
-        <p class="error-message">{{ errors.email }}</p>
-        <input
-          type="password"
-          v-bind="password"
-          placeholder="Enter password"
-          class="base-text-field"
-        />
-        <p class="error-message">{{ errors.password }}</p>
-        <button class="base-button" type="submit">Login</button>
-      </form>
+          <AtomsBaseInput
+            :type="'text'"
+            v-bind="email"
+            :placeholder="'Enter email'"
+          />
+          <p class="error-message">{{ errors.email }}</p>
+          <AtomsBaseInput
+            :type="'password'"
+            v-bind="password"
+            :placeholder="'Enter password'"
+          />
+          <p class="error-message">{{ errors.password }}</p>
+          <AtomsBaseButton text="Login" />
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useForm } from 'vee-validate';
+import { useForm } from "vee-validate";
 
-function required(value : any) {
-  return value ? true : 'This field is required';
+function required(value: any) {
+  return value ? true : "This field is required";
 }
 
 const { defineInputBinds, handleSubmit, errors } = useForm({
@@ -39,20 +37,19 @@ const { defineInputBinds, handleSubmit, errors } = useForm({
   },
 });
 
-const email = defineInputBinds('email');
-const password = defineInputBinds('password');
+const email = defineInputBinds("email");
+const password = defineInputBinds("password");
 
 const router = useRouter();
-const isLogin = useCookie('auth');
+const isLogin = useCookie("auth");
 
-const login = handleSubmit(values => {
+const login = handleSubmit((values) => {
   const { email, password } = values;
-  if(email === 'admin@gmail.com' && password === 'password'){
+  if (email === "admin@gmail.com" && password === "password") {
     isLogin.value = true;
-    router.push('/')
+    router.push("/");
   }
 });
-
 </script> 
 
 <style scoped lang="scss">
@@ -68,21 +65,7 @@ const login = handleSubmit(values => {
 .login-form {
   @apply space-y-4 md:space-y-6;
 }
-.base-button {
-  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded mt-5;
-  &:hover {
-    @apply bg-blue-700;
-  }
-}
-.base-text-field {
-  @apply bg-gray-50 border border-gray-300 
-    mt-5
-    text-gray-900 
-    rounded-lg
-    block w-full p-2.5;
-}
 .error-message {
-    @apply 
-    mt-2 text-sm text-green-600 dark:text-green-500;
+  @apply mt-2 text-sm text-green-600 dark:text-green-500;
 }
 </style>

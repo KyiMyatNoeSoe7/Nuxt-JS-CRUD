@@ -10,14 +10,14 @@
 <style scoped lang="scss">
 .footer {
     @apply
-    bg-gray-300 rounded-lg shadow dark:bg-gray-800;
+    bg-slate-50 rounded-lg shadow;
 }
 .footer-div {
     @apply
-    w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between;
+    w-full mx-auto max-w-screen-xl p-4;
 }
 .footer-text {
     @apply 
-    text-sm text-gray-500 sm:text-center dark:text-gray-400;
+    text-sm text-gray-500 text-center;
 }
 </style>

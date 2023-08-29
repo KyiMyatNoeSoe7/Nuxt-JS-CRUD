@@ -16,7 +16,10 @@
                 <nuxt-link to="/contact" class="nav">Contact</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/posts/list" class="nav">Posts</nuxt-link>
+                <nuxt-link v-if="isLogin == true" to="/products/list" class="nav">Products</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link v-if="isLogin == true" to="/posts/list" class="nav">Posts</nuxt-link>
               </li>
               <li>
                 <nuxt-link v-if="!isLogin" to="/login" class="nav">Login</nuxt-link>

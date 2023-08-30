@@ -30,7 +30,8 @@ definePageMeta({
 });
 
 function required(value: any) {
-  return value ? true : "This field is required";
+  const regex = new RegExp(/^\s+$/g);
+  return value && !regex.test(value) ? true : 'The field is required';
 }
 
 const { defineInputBinds, handleSubmit, errors } = useForm({
@@ -49,16 +50,16 @@ const router = useRouter();
 
 const create = handleSubmit((values) => {
   const { id, title, description } = values;
+  const trimmedTitle = title.trim();
+  const trimmedDescription = description.trim();
   useFetch("/api/posts/store", {
     method: "post",
-    body: { id, title, description },
+    body: { id, title: trimmedTitle, description: trimmedDescription},
   });
   router.push("/posts/list");
 });
 </script>
 
 <style scoped lang="scss">
-.error-message {
-  @apply mt-2 text-sm text-green-600 dark:text-green-500;
-}
+@import "@/assets/scss/variables.scss";
 </style>

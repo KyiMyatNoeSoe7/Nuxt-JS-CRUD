@@ -26,14 +26,39 @@
 <script lang="ts" setup>
 import { useForm } from "vee-validate";
 
-function required(value: any) {
-  return value ? true : "This field is required";
+definePageMeta({
+  middleware:["login"]
+})
+
+// definePageMeta({
+//   middleware: [""]
+// });
+
+function passwordValid(value: any) {
+  if(!value){
+    return "The password field is required";
+  }else if(value.length < 6){
+    return "Password must be at least 6 characters";
+  }else {
+    return true;
+  }
+}
+
+function emailVaild(value : any) {
+  let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+  if(!value) {
+    return "The email field is requied";
+  }else if (!regex.test(value)) {
+    return "The email format is invalid";
+  }else {
+    return true;
+  }
 }
 
 const { defineInputBinds, handleSubmit, errors } = useForm({
   validationSchema: {
-    email: required,
-    password: required,
+    email: emailVaild,
+    password: passwordValid,
   },
 });
 
@@ -53,19 +78,5 @@ const login = handleSubmit((values) => {
 </script> 
 
 <style scoped lang="scss">
-.login {
-  @apply flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0;
-}
-.login-div {
-  @apply w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 text-center;
-}
-.login-title {
-  @apply p-6 space-y-4 md:space-y-6 sm:p-8;
-}
-.login-form {
-  @apply space-y-4 md:space-y-6;
-}
-.error-message {
-  @apply mt-2 text-sm text-green-600 dark:text-green-500;
-}
+@import "@/assets/scss/variables.scss";
 </style>

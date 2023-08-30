@@ -1,2 +1,47 @@
 $primary: #010933;
 $white: #fff;
+.input-title {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 text-sm rounded-lg block w-1/2 p-2.5;
+}
+
+.error-message {
+    @apply mt-2 text-sm text-green-600;
+}
+
+.textarea-desp {
+    @apply block p-2.5 w-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300;
+}
+
+.error-message {
+    @apply mt-2 text-sm text-red-600;
+}
+
+.base-button {
+    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
+    &:hover {
+        @apply bg-blue-700;
+    }
+}
+
+.delete-button {
+    @apply bg-red-500 text-white font-bold py-2 px-4 rounded ml-2;
+    &:hover {
+        @apply bg-red-700;
+    }
+}
+
+.login {
+    @apply flex flex-col items-center justify-center px-96 py-36 mx-auto;
+}
+
+.login-div {
+    @apply w-full bg-white rounded-lg shadow text-center;
+}
+
+.login-title {
+    @apply p-6 space-y-12;
+}
+
+.login-form {
+    @apply space-y-12;
+}

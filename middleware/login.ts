@@ -1,10 +1,9 @@
 export default defineNuxtRouteMiddleware((to, from) => {
 
     const isLogin = useCookie('auth');
-
-    if(!isLogin.value || isLogin.value === 'false'){
-        console.log(isLogin.value);
+    console.log(isLogin.value);
+    if (isLogin.value === 'true') {
         abortNavigation();
-        return navigateTo('/login');
+        return navigateTo('/about');
     }
 });

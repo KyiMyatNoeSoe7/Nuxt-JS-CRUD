@@ -12,3 +12,9 @@
   text-align: center;
 }
 </style>
+
+<script setup>
+definePageMeta({
+  middleware: ["auth"]
+})
+</script>

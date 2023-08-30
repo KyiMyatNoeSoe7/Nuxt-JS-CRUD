@@ -10,11 +10,11 @@
 <style scoped lang="scss">
 .footer {
     @apply
-    bg-slate-50 rounded-lg shadow;
+    w-full bg-slate-50 rounded-lg fixed bottom-0 shadow ;
 }
 .footer-div {
     @apply
-    w-full mx-auto max-w-screen-xl p-4;
+    w-full mx-auto p-4;
 }
 .footer-text {
     @apply 

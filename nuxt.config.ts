@@ -21,13 +21,7 @@ export default defineNuxtConfig({
     // ...
     '@pinia/nuxt',
   ],
-  // modules: [
-  //   '@nuxtjs/axios',
-  //   '@nuxtjs/auth-next'
-  // ],
-  // router: {
-  //   middleware: ['auth'],
-  // },
+
   pinia: {
     autoImports: ['defineStore', 'acceptHMRUpdate'],
   },  

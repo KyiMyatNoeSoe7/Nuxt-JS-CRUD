@@ -2,14 +2,9 @@
   <div class="container mx-80">
     <AtomsTextLabel text="Create Post" />
     <form @submit.prevent="create">
-      <div class="my-6">
-        <AtomsInputLabel text="Code Number" />
-        <AtomsInputText :type="'number'" v-bind="id" :name="'id'" :placeholder="'Enter code number'" />
-        <p class="error-message">{{ errors.id }}</p>
-      </div>
       <div class="mb-6">
         <AtomsInputLabel text="Title" />
-        <AtomsInputText :type="'text'" v-bind="title" :name="'title'" :placeholder="'Enter title'" />
+        <AtomsInputText :type="'text'" v-bind="title" :placeholder="'Enter title'" />
         <p class="error-message">{{ errors.title }}</p>
       </div>
       <div class="mb-6">
@@ -36,25 +31,29 @@ function required(value: any) {
 
 const { defineInputBinds, handleSubmit, errors } = useForm({
   validationSchema: {
-    id: required,
     title: required,
     description: required,
   },
 });
 
-const id = defineInputBinds("id");
 const title = defineInputBinds("title");
 const description = defineInputBinds("description");
 
 const router = useRouter();
 
+const { data } = await useFetch("/api/posts/lists");
+
+const dataId = ref();
+dataId.value = data.value ? data.value.length + 1 : 1 ;
+
 const create = handleSubmit((values) => {
-  const { id, title, description } = values;
+  const { title, description } = values;
   const trimmedTitle = title.trim();
   const trimmedDescription = description.trim();
+
   useFetch("/api/posts/store", {
     method: "post",
-    body: { id, title: trimmedTitle, description: trimmedDescription},
+    body: { id: dataId, title: trimmedTitle, description: trimmedDescription},
   });
   router.push("/posts/list");
 });

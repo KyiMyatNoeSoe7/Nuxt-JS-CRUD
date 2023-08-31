@@ -27,18 +27,16 @@
 import { useForm } from "vee-validate";
 
 definePageMeta({
-  middleware:["login"]
+  middleware:["is-login"]
 })
-
-// definePageMeta({
-//   middleware: [""]
-// });
 
 function passwordValid(value: any) {
   if(!value){
     return "The password field is required";
   }else if(value.length < 6){
     return "Password must be at least 6 characters";
+  }else if(value !== "password"){
+    return "Invalid password!";
   }else {
     return true;
   }
@@ -50,6 +48,8 @@ function emailVaild(value : any) {
     return "The email field is requied";
   }else if (!regex.test(value)) {
     return "The email format is invalid";
+  }else if(value !== "admin@gmail.com"){
+    return "Invalid user email!";
   }else {
     return true;
   }

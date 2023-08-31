@@ -7,7 +7,7 @@
           <div class="nav-div">
             <ul class="nav-base">
               <li>
-                <nuxt-link to="/" class="nav" aria-current="page">Home</nuxt-link>
+                <nuxt-link v-if="isLogin == true" to="/" class="nav" aria-current="page">Home</nuxt-link>
               </li>
               <li>
                 <nuxt-link v-if="isLogin == true" to="/about" class="nav">About</nuxt-link>
